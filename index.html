@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Lets Gambel</title>
+</head>
+<body>
+
+
+    <label for="Saurabh">Saurabh :</label>
+    <input type="text" id="player 1" value="Saurabh" >
+<button id="1" class="gamble">Lets Gambel</button>
+Score :<span></span> 
+
+<br><br>
+
+<label for="SRK">SRK :</label>
+<input type="text" id="player 2" value="SRK" >
+<button id="2" class="gamble">Lets Gambel</button>
+Score : <span></span>
+
+<br><br>
+
+<label for="Salman">Salman :</label>
+<input type="text" id="player 3" value="Salman" >
+<button id="3" class="gamble">Lets Gambel</button>
+Score :<span></span> 
+
+<br><br>
+
+<label for="Narendar Modi">Narendar Modi :</label>
+<input type="text" id="player 4" value="Narendar Modi" >
+<button id="4" class="gamble">Lets Gambel</button>
+Score :<span></span> 
+
+<br><br>
+
+<label for="Dhoni">Dhoni :</label>
+<input type="text" id="player 5" value="Dhoni" >
+<button id="5" class="gamble">Lets Gambel</button>
+Score :<span></span> 
+
+<br><br>
+
+<label for="Mahi">Mahi :</label>
+<input type="text" id="player 6" value="Mahi" >
+<button id="6" class="gamble">Lets Gambel</button>
+Score :<span></span> 
+<br><br>
+
+<button class="winner">Find Winner</button>
+<div class="output"></div>
+
+<script>
+
+    let playerName = document.querySelectorAll("input")
+
+    let gambleBtns = document.querySelectorAll(".gamble")
+let scoreArea = document.querySelectorAll("span")
+
+let winnerBtn = document.querySelector(".winner")
+
+let output = document.querySelector(".output")
+
+winnerBtn.disabled = true
+
+ for(let t of gambleBtns){
+    t.addEventListener("click", dicePlay)
+ }
+let count=0
+
+function dicePlay(e) {
+
+    count++
+
+    if(count == 6){
+        winnerBtn.disabled = false
+    }
+user_id = e.target.id-1
+gambleBtns[user_id].disabled = true
+let choices = [1,2,3,4,5,6]
+let random_index = parseInt(Math.random()*choices.length)
+let diceValue = choices[random_index] 
+scoreArea[user_id].innerText = diceValue
+}
+winnerBtn.addEventListener("click", findWinner)
+
+function findWinner() {
+    //get highest score
+    winnerBtn.disabled = true
+    let highestDiceScore = 0
+    for(t of scoreArea){
+        let diceValue = t.innerText
+        if(diceValue  > highestDiceScore){
+            highestDiceScore = diceValue
+        }
+    }
+    //get highest score position
+    let highestScorePositions = []
+    for(let i=0; i<scoreArea.length-1; i++){
+        let diceValue = scoreArea[i].innerText
+        if(diceValue == highestDiceScore){
+            highestScorePositions.push(i)
+        }
+    }
+// get highest score player name
+let winnerName = []
+for(t of highestScorePositions){
+    winnerName.push(playerName[t].value)
+}
+ let winnerNameString = winnerName.join(", ")
+
+ output.innerText = `Winner is ${winnerNameString}`
+}
+
+</script>
+</body>
+</html>
